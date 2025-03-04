@@ -1,16 +1,16 @@
 # HostModifier
-HostModifier With Golang
+HostModifier 使用 Golang
 
-## API Endpoints
+## API 端點
 
-### Display all registered hosts
-- **Endpoint**: `[GET] /api/hosts`
-- **Description**: Displays the list of all registered hosts in the `/etc/hosts` file.
-- **Example Request**:
+### 顯示所有註冊的主機
+- **端點**: `[GET] /api/hosts`
+- **描述**: 顯示 `/etc/hosts` 文件中所有註冊的主機列表。
+- **範例請求**:
   ```sh
   curl -X GET http://localhost:8080/api/hosts
   ```
-- **Example Response**:
+- **範例回應**:
   ```json
   {
     "hosts": [
@@ -20,69 +20,69 @@ HostModifier With Golang
   }
   ```
 
-### Create a new host
-- **Endpoint**: `[POST] /api/hosts`
-- **Description**: Creates a new host entry in the `/etc/hosts` file.
-- **Example Request**:
+### 創建新主機
+- **端點**: `[POST] /api/hosts`
+- **描述**: 在 `/etc/hosts` 文件中創建一個新的主機條目。
+- **範例請求**:
   ```sh
   curl -X POST http://localhost:8080/api/hosts -d '{"ip": "10.10.10.100", "hostname": "beta.example.com"}' -H "Content-Type: application/json"
   ```
-- **Example Response**:
+- **範例回應**:
   ```json
   {
     "message": "Host entry created successfully."
   }
   ```
 
-### Modify an existing host
-- **Endpoint**: `[PUT] /api/hosts/{host}`
-- **Description**: Modifies an existing host entry in the `/etc/hosts` file.
-- **Example Request**:
+### 修改現有主機
+- **端點**: `[PUT] /api/hosts/{host}`
+- **描述**: 修改 `/etc/hosts` 文件中的現有主機條目。
+- **範例請求**:
   ```sh
   curl -X PUT http://localhost:8080/api/hosts/beta.example.com -d '{"ip": "10.10.10.101"}' -H "Content-Type: application/json"
   ```
-- **Example Response**:
+- **範例回應**:
   ```json
   {
     "message": "Host entry modified successfully."
   }
   ```
 
-### Confirm the IP of a host
-- **Endpoint**: `[GET] /api/hosts/{host}`
-- **Description**: Confirms the IP address of a specific host in the `/etc/hosts` file.
-- **Example Request**:
+### 確認主機的 IP
+- **端點**: `[GET] /api/hosts/{host}`
+- **描述**: 確認 `/etc/hosts` 文件中特定主機的 IP 地址。
+- **範例請求**:
   ```sh
   curl -X GET http://localhost:8080/api/hosts/beta.example.com
   ```
-- **Example Response**:
+- **範例回應**:
   ```json
   {
     "ip": "10.10.10.100"
   }
   ```
 
-### Delete a host
-- **Endpoint**: `[DELETE] /api/hosts/{host}`
-- **Description**: Deletes a host entry from the `/etc/hosts` file.
-- **Example Request**:
+### 刪除主機
+- **端點**: `[DELETE] /api/hosts/{host}`
+- **描述**: 從 `/etc/hosts` 文件中刪除主機條目。
+- **範例請求**:
   ```sh
   curl -X DELETE http://localhost:8080/api/hosts/beta.example.com
   ```
-- **Example Response**:
+- **範例回應**:
   ```json
   {
     "message": "Host entry deleted successfully."
   }
   ```
 
-## Permissions
-- The application requires permission to modify the `/etc/hosts` file. Ensure that the application has the necessary permissions to read and write to this file.
+## 權限
+- 該應用程序需要修改 `/etc/hosts` 文件的權限。確保應用程序具有讀寫此文件的必要權限。
 
-## setupRoutes function
-- **File**: `main.go`
-- **Description**: Sets up the routes and starts the server.
-- **Code**:
+## setupRoutes 函數
+- **文件**: `main.go`
+- **描述**: 設置路由並啟動服務器。
+- **代碼**:
   ```go
   func setupRoutes() {
       router := mux.NewRouter()
@@ -112,10 +112,10 @@ HostModifier With Golang
   }
   ```
 
-## HostEntry struct
-- **File**: `routes.go`
-- **Description**: Represents a parsed entry from the hosts file.
-- **Code**:
+## HostEntry 結構體
+- **文件**: `routes.go`
+- **描述**: 表示從 hosts 文件中解析的條目。
+- **代碼**:
   ```go
   type HostEntry struct {
       IP       string `json:"ip,omitempty"`
@@ -125,10 +125,10 @@ HostModifier With Golang
   }
   ```
 
-## parseHostEntry function
-- **File**: `routes.go`
-- **Description**: Analyzes a single line from the hosts file and returns a HostEntry.
-- **Code**:
+## parseHostEntry 函數
+- **文件**: `routes.go`
+- **描述**: 分析 hosts 文件中的單行並返回 HostEntry。
+- **代碼**:
   ```go
   func parseHostEntry(line string) HostEntry {
       line = strings.TrimSpace(line)
@@ -158,10 +158,10 @@ HostModifier With Golang
   }
   ```
 
-## getHostsHandler function
-- **File**: `routes.go`
-- **Description**: Handles the request to get all hosts.
-- **Code**:
+## getHostsHandler 函數
+- **文件**: `routes.go`
+- **描述**: 處理獲取所有主機的請求。
+- **代碼**:
   ```go
   func getHostsHandler(w http.ResponseWriter, r *http.Request) {
       lines, err := readHostsFile()
@@ -185,10 +185,10 @@ HostModifier With Golang
   }
   ```
 
-## createHostHandler function
-- **File**: `routes.go`
-- **Description**: Handles the request to create a new host.
-- **Code**:
+## createHostHandler 函數
+- **文件**: `routes.go`
+- **描述**: 處理創建新主機的請求。
+- **代碼**:
   ```go
   func createHostHandler(w http.ResponseWriter, r *http.Request) {
       var requestData struct {
@@ -215,10 +215,10 @@ HostModifier With Golang
   }
   ```
 
-## modifyHostHandler function
-- **File**: `routes.go`
-- **Description**: Handles the request to modify an existing host.
-- **Code**:
+## modifyHostHandler 函數
+- **文件**: `routes.go`
+- **描述**: 處理修改現有主機的請求。
+- **代碼**:
   ```go
   func modifyHostHandler(w http.ResponseWriter, r *http.Request) {
       vars := mux.Vars(r)
@@ -247,10 +247,10 @@ HostModifier With Golang
   }
   ```
 
-## confirmHostIPHandler function
-- **File**: `routes.go`
-- **Description**: Handles the request to confirm the IP of a host.
-- **Code**:
+## confirmHostIPHandler 函數
+- **文件**: `routes.go`
+- **描述**: 處理確認主機 IP 的請求。
+- **代碼**:
   ```go
   func confirmHostIPHandler(w http.ResponseWriter, r *http.Request) {
       vars := mux.Vars(r)
@@ -268,10 +268,10 @@ HostModifier With Golang
   }
   ```
 
-## deleteHostHandler function
-- **File**: `routes.go`
-- **Description**: Handles the request to delete a host.
-- **Code**:
+## deleteHostHandler 函數
+- **文件**: `routes.go`
+- **描述**: 處理刪除主機的請求。
+- **代碼**:
   ```go
   func deleteHostHandler(w http.ResponseWriter, r *http.Request) {
       vars := mux.Vars(r)
@@ -288,10 +288,10 @@ HostModifier With Golang
   }
   ```
 
-## checkPermissions function
-- **File**: `main.go`
-- **Description**: Checks if the application has permission to modify the `/etc/hosts` file.
-- **Code**:
+## checkPermissions 函數
+- **文件**: `main.go`
+- **描述**: 檢查應用程序是否有權修改 `/etc/hosts` 文件。
+- **代碼**:
   ```go
   func checkPermissions() bool {
       hostsFilePath := getHostsFilePath()
@@ -304,10 +304,10 @@ HostModifier With Golang
   }
   ```
 
-## getHostsFilePath function
-- **File**: `main.go`
-- **Description**: Returns the path to the hosts file based on the operating system.
-- **Code**:
+## getHostsFilePath 函數
+- **文件**: `main.go`
+- **描述**: 根據操作系統返回 hosts 文件的路徑。
+- **代碼**:
   ```go
   func getHostsFilePath() string {
       if runtime.GOOS == "windows" {
@@ -317,10 +317,10 @@ HostModifier With Golang
   }
   ```
 
-## readHostsFile function
-- **File**: `hosts.go`
-- **Description**: Reads the contents of the hosts file and returns the lines.
-- **Code**:
+## readHostsFile 函數
+- **文件**: `hosts.go`
+- **描述**: 讀取 hosts 文件的內容並返回行。
+- **代碼**:
   ```go
   func readHostsFile() ([]string, error) {
       hostsFilePath := getHostsFilePath()
@@ -339,10 +339,10 @@ HostModifier With Golang
   }
   ```
 
-## writeHostsFile function
-- **File**: `hosts.go`
-- **Description**: Writes the lines to the hosts file.
-- **Code**:
+## writeHostsFile 函數
+- **文件**: `hosts.go`
+- **描述**: 將行寫入 hosts 文件。
+- **代碼**:
   ```go
   func writeHostsFile(lines []string) error {
       hostsFilePath := getHostsFilePath()
@@ -363,10 +363,10 @@ HostModifier With Golang
   }
   ```
 
-## addHost function
-- **File**: `hosts.go`
-- **Description**: Adds a new host entry to the hosts file.
-- **Code**:
+## addHost 函數
+- **文件**: `hosts.go`
+- **描述**: 向 hosts 文件中添加新主機條目。
+- **代碼**:
   ```go
   func addHost(ip, hostname string) error {
       lines, err := readHostsFile()
@@ -381,10 +381,10 @@ HostModifier With Golang
   }
   ```
 
-## modifyHost function
-- **File**: `hosts.go`
-- **Description**: Modifies an existing host entry in the hosts file.
-- **Code**:
+## modifyHost 函數
+- **文件**: `hosts.go`
+- **描述**: 修改 hosts 文件中的現有主機條目。
+- **代碼**:
   ```go
   func modifyHost(hostname, newIP string) error {
       lines, err := readHostsFile()
@@ -403,10 +403,10 @@ HostModifier With Golang
   }
   ```
 
-## confirmHostIP function
-- **File**: `hosts.go`
-- **Description**: Confirms the IP address of a specific host in the hosts file.
-- **Code**:
+## confirmHostIP 函數
+- **文件**: `hosts.go`
+- **描述**: 確認 hosts 文件中特定主機的 IP 地址。
+- **代碼**:
   ```go
   func confirmHostIP(hostname string) (string, error) {
       lines, err := readHostsFile()
@@ -427,10 +427,10 @@ HostModifier With Golang
   }
   ```
 
-## deleteHost function
-- **File**: `hosts.go`
-- **Description**: Deletes a host entry from the hosts file.
-- **Code**:
+## deleteHost 函數
+- **文件**: `hosts.go`
+- **描述**: 從 hosts 文件中刪除主機條目。
+- **代碼**:
   ```go
   func deleteHost(hostname string) error {
       lines, err := readHostsFile()
@@ -450,9 +450,9 @@ HostModifier With Golang
   ```
 
 ## Makefile
-- **File**: `Makefile`
-- **Description**: Contains the build, run, and dependency management targets for the project.
-- **Code**:
+- **文件**: `Makefile`
+- **描述**: 包含項目的構建、運行和依賴管理目標。
+- **代碼**:
   ```makefile
   # Makefile for HostModifier
 
@@ -479,9 +479,9 @@ HostModifier With Golang
   ```
 
 ## go.mod
-- **File**: `go.mod`
-- **Description**: Contains the module path and dependencies for the project.
-- **Code**:
+- **文件**: `go.mod`
+- **描述**: 包含項目的模塊路徑和依賴項。
+- **代碼**:
   ```go
   module github.com/sam33339999/HostModifier
 
