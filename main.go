@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 	"runtime"
 )
@@ -35,7 +34,7 @@ func getHostsFilePath() string {
 	return "/etc/hosts"
 }
 
-func setupRoutes() {
-	// Call the function to set up routes and start the server
-	// This function will be implemented in routes.go
-}
+// func setupRoutes() {
+// 	// Call the function to set up routes and start the server
+// 	// This function will be implemented in routes.go
+// }
