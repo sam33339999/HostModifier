@@ -100,10 +100,13 @@ func deleteHost(hostname string) error {
 
 	for i, line := range lines {
 		if strings.Contains(line, hostname) {
+			if strings.HasPrefix(line, "# DELETE AT") {
+				continue
+			}
 			lines[i] = fmt.Sprintf("# DELETE AT(%s) %s", time.Now().Format("2006/01/02 15:04:05"), line)
 			break
+			}
 		}
-	}
 
 	return writeHostsFile(lines)
 }
