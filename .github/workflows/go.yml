@@ -9,37 +9,20 @@ on:
   pull_request:
     branches: [ "main" ]
   release:
-    types: [published]
+    types: [created]
+
+permissions:
+    contents: write
+    packages: write
 
 jobs:
-
-  build:
-    if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
+  release-linux-amd64:
+    name: release linux/amd64
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-      GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v4
+    - uses: actions/checkout@v4
+    - uses: wangyoucao577/go-release-action@v1
       with:
-        go-version: '1.20'
-
-    - name: Build for x86-64-linux
-      run: GOOS=linux GOARCH=amd64 go build -v -o hostmodifier-x86-64-linux .
-
-    - name: Build for arm-linux
-      run: GOOS=linux GOARCH=arm go build -v -o hostmodifier-arm-linux .
-
-    - name: Test
-      run: go test -v .
-
-    - name: Release binaries
-      uses: goreleaser/goreleaser-action@v2
-      with:
-        version: latest
-        args: release
-        upload-artifacts: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: linux
+        goarch: amd64
