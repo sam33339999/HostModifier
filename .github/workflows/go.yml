@@ -16,6 +16,10 @@ jobs:
   build:
     if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+      GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
     steps:
     - uses: actions/checkout@v2
 
