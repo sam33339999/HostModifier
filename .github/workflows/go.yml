@@ -37,4 +37,5 @@ jobs:
       uses: goreleaser/goreleaser-action@v2
       with:
         version: latest
-        args: release --rm-dist
+        args: release
+        upload-artifacts: true
